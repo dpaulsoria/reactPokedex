@@ -1,17 +1,23 @@
-import "./App.css";
-import "./Style.css";
+import "./css/App.css";
+import "./css/Style.css";
+import "./css/Types.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { SearchBar } from "./components/SearchBar";
+import { TopBar } from "./components/TopBar";
 import { NotFound } from "./components/NotFound";
-import { Header } from "./components/Header";
+import { BottomNav } from "./components/BottomNav";
 
 import { Home } from "./views/Home";
+import { Abilities } from "./views/Abilities";
 
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
 import { colors } from "@mui/material";
+import { useEffect } from "react";
+import { getPokemon } from "./services/pokemon";
+import { getAbility } from "./services/ability";
 
 const Theme = createTheme({
   palette: {
@@ -22,22 +28,32 @@ const Theme = createTheme({
 });
 
 function App() {
+  const gettingPokemon = async (poke) => {
+    const asyncRes = await getPokemon(poke);
+    console.log(asyncRes);
+  };
+
+  useEffect(() => {
+    gettingPokemon("pikachu");
+    
+  }, []);
+
   return (
     <div className="App">
       <ThemeProvider theme={Theme}>
         <BrowserRouter>
-          <SearchBar />
+          <TopBar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/baseStats" element={<NotFound />} />
             <Route path="/moves" element={<NotFound />} />
-            <Route path="/abilities" element={<NotFound />} />
+            <Route path="/abilities" element={<Abilities />} />
           </Routes>
-          <Header className="header" />
+          <BottomNav className="header" />
         </BrowserRouter>
       </ThemeProvider>
     </div>
   );
 }
 
-export default App;
+export { App };
