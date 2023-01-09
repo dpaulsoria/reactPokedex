@@ -17,7 +17,6 @@ import { createTheme } from "@mui/material/styles";
 import { colors } from "@mui/material";
 import { useEffect } from "react";
 import { getPokemon } from "./services/pokemon";
-import { getAbility } from "./services/ability";
 
 const Theme = createTheme({
   palette: {
